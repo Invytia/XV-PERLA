@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mis XV Años - Perla Salvador Melo</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Pinyon+Script&family=Montserrat:wght@300;400;500&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  /* Paleta: azul cielo / plateado / rosa */
+  --bg:#F6F9FC; --sky:#4F8DBF; --sky-deep:#2F6592; --sky-light:#BFD9EE;
+  --rose:#E7A8BD; --rose-soft:#F6DCE5; --silver:#C4CAD3;
+  --dark:#1D2E45; --text:#243447; --muted:#55667A;
+  --ease:cubic-bezier(.25,1,.5,1);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:100%;font-family:'Montserrat',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;scroll-behavior:smooth}
+
+/* Música */
+.music-btn{position:fixed;bottom:28px;right:28px;width:50px;height:50px;border-radius:50%;background:var(--sky-deep);border:none;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:2000;box-shadow:0 10px 25px rgba(47,101,146,.4);opacity:0;visibility:hidden;transition:all .6s var(--ease)}
+body.content-active .music-btn{opacity:1;visibility:visible}
+.music-btn svg{width:18px;height:18px;fill:#fff}
+
+/* Sobre */
+#envelope-screen{position:fixed;inset:0;background:linear-gradient(160deg,#6FA6D2,#9CC3E3 55%,#E7B9CC) url('assets/fondo.jpg') center/cover no-repeat;z-index:1000;display:flex;flex-direction:column;justify-content:center;align-items:center;transition:opacity 1.2s,visibility 1.2s}
+#envelope-screen.fade-out{opacity:0;visibility:hidden;pointer-events:none}
+.env-text{text-align:center;margin-bottom:50px;animation:float 4s ease-in-out infinite;position:relative;z-index:10}
+.env-tag{font-family:'Cinzel',serif;font-size:14px;letter-spacing:8px;text-transform:uppercase;color:#fff;font-weight:500}
+.env-title{font-family:'Pinyon Script',cursive;font-size:80px;color:#fff;line-height:1.2;margin-top:5px;font-weight:400}
+.envelope-wrapper{position:relative;cursor:pointer;transition:transform .6s var(--ease);z-index:10}
+.envelope-wrapper:hover{transform:translateY(-8px)}
+.envelope{position:relative;width:320px;height:210px;background:#fff;border-radius:2px;box-shadow:0 15px 35px rgba(0,0,0,.18)}
+.envelope::before{content:'';position:absolute;top:0;right:0;border-right:160px solid #F8FAFC;border-top:105px solid transparent;border-bottom:105px solid #F8FAFC;z-index:2}
+.envelope::after{content:'';position:absolute;top:0;left:0;border-left:160px solid #EEF2F7;border-top:105px solid transparent;border-bottom:105px solid #EEF2F7;z-index:2}
+.front-flap{position:absolute;top:0;left:0;border-left:160px solid transparent;border-right:160px solid transparent;border-top:115px solid #DCE4EE;transform-origin:top;transition:transform .9s var(--ease);z-index:4;filter:drop-shadow(0 4px 6px rgba(0,0,0,.08))}
+.envelope-wrapper.open .front-flap{transform:rotateX(180deg);z-index:1}
+.wax-seal{position:absolute;top:90px;left:50%;transform:translateX(-50%);width:45px;height:45px;background:var(--rose);border-radius:50%;z-index:5;box-shadow:inset 0 2px 4px rgba(255,255,255,.4),0 4px 15px rgba(231,168,189,.6);transition:opacity .5s .1s,transform .5s}
+.envelope-wrapper.open .wax-seal{opacity:0;transform:translateX(-50%) scale(.5);pointer-events:none}
+.hint{font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:4px;color:var(--sky-deep);margin-top:40px;animation:pulse 2.5s infinite;background:rgba(255,255,255,.75);padding:5px 15px;border-radius:20px;position:relative;z-index:10}
+@keyframes pulse{0%,100%{opacity:.5}50%{opacity:1}}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+
+/* Contenido */
+#main{display:none;width:100%;flex-direction:column;align-items:center;opacity:0;animation:fadeIn 2s forwards .3s}
+body.content-active #main{display:flex}
+@keyframes fadeIn{to{opacity:1}}
+.anim{opacity:0;transition:all 1.2s var(--ease);position:relative;z-index:2}
+.up{transform:translateY(40px)}.zoom{transform:scale(.92)}
+.anim.in-view{opacity:1;transform:none}
+.d1{transition-delay:.1s}.d2{transition-delay:.25s}.d3{transition-delay:.4s}.d4{transition-delay:.55s}
+
+.sec{width:100%;padding:110px 20px;display:flex;flex-direction:column;align-items:center;text-align:center;position:relative;overflow:hidden}
+.bg-pearl{background:var(--bg)}
+.bg-sky,.bg-dark{color:#fff;position:relative}
+.bg-sky{background:linear-gradient(180deg,var(--sky-deep),#3C78A8)}
+.bg-dark{background:var(--dark)}
+.bg-sky::before,.bg-sky::after,.bg-dark::before,.bg-dark::after{content:'';position:absolute;inset:0;pointer-events:none;z-index:1}
+.bg-sky::before,.bg-dark::before{background-image:radial-gradient(1.5px 1.5px at 20px 30px,rgba(255,255,255,.9),transparent),radial-gradient(1px 1px at 60px 80px,rgba(255,255,255,.7),transparent),radial-gradient(2px 2px at 120px 40px,#fff,transparent),radial-gradient(1px 1px at 180px 150px,rgba(255,255,255,.6),transparent),radial-gradient(1.5px 1.5px at 260px 90px,rgba(255,255,255,.9),transparent),radial-gradient(1px 1px at 320px 170px,rgba(255,255,255,.8),transparent);background-size:350px 350px;animation:stars 4s infinite alternate ease-in-out;opacity:.6}
+.bg-sky::after,.bg-dark::after{background-image:radial-gradient(1px 1px at 40px 160px,rgba(255,255,255,.7),transparent),radial-gradient(2px 2px at 140px 240px,#fff,transparent),radial-gradient(1.5px 1.5px at 240px 50px,rgba(255,255,255,.9),transparent),radial-gradient(1px 1px at 290px 200px,rgba(255,255,255,.5),transparent),radial-gradient(1.5px 1.5px at 340px 280px,rgba(255,255,255,.8),transparent);background-size:400px 400px;animation:stars 6s infinite alternate-reverse ease-in-out;opacity:.5}
+@keyframes stars{0%{opacity:.2;transform:scale(1)}100%{opacity:.9;transform:scale(1.05)}}
+.bg-sky .info-title,.bg-dark .info-title,.bg-sky .tag-line,.bg-dark .tag-line{color:var(--sky-light)}
+.bg-sky .info-data,.bg-dark .info-data,.bg-sky .script,.bg-dark .script{color:#fff}
+.bg-sky .body-serif,.bg-dark .body-serif{color:#E3EDF6}
+.floral{position:absolute;pointer-events:none;z-index:0;opacity:.7;max-width:180px}
+
+.tag-line{font-family:'Cinzel',serif;font-size:14px;letter-spacing:5px;text-transform:uppercase;color:var(--sky-deep);margin-bottom:25px;font-weight:600}
+.script{font-family:'Pinyon Script',cursive;font-size:76px;color:var(--text);margin-bottom:20px;line-height:1.1;font-weight:400}
+.body-serif{font-family:'Cormorant Garamond',serif;font-size:23px;line-height:1.6;color:var(--muted);font-style:italic;max-width:600px;padding:0 15px}
+.info-title{font-family:'Cinzel',serif;font-size:14px;letter-spacing:3px;line-height:1.5;text-transform:uppercase;color:var(--sky-deep);margin-bottom:12px;font-weight:600}
+.info-data{font-family:'Cormorant Garamond',serif;font-size:32px;color:var(--text);margin-bottom:5px;font-weight:500;line-height:1.3}
+.name-script{font-family:'Pinyon Script',cursive;font-size:42px;color:var(--text);margin-bottom:8px;line-height:1.3}
+.amp{font-family:'Cinzel',serif;font-size:20px;color:var(--rose);margin:12px 0}
+.bg-sky .name-script{color:#fff}
+.photo{width:100%;max-width:380px;height:auto;border-radius:6px;box-shadow:0 15px 35px rgba(0,0,0,.14);margin:35px auto;display:block;object-fit:cover}
+.icon{width:34px;height:34px;margin-bottom:18px;stroke:var(--sky-deep);fill:none;stroke-width:1.4;position:relative;z-index:2}
+.bg-sky .icon,.bg-dark .icon{stroke:#fff}
+
+.btn{display:inline-block;background:var(--sky-deep);color:#fff;padding:17px 35px;font-family:'Montserrat',sans-serif;font-size:12px;font-weight:500;letter-spacing:3px;text-transform:uppercase;text-decoration:none;border:none;cursor:pointer;border-radius:2px;transition:all .4s;margin-top:30px;position:relative;z-index:5}
+.btn:hover{background:var(--sky);transform:translateY(-3px);box-shadow:0 10px 20px rgba(47,101,146,.25)}
+.bg-sky .btn,.bg-dark .btn{background:#fff;color:var(--sky-deep)}
+.bg-sky .btn:hover,.bg-dark .btn:hover{background:var(--rose-soft)}
+
+/* Calendario */
+.calendar{width:100%;max-width:340px;margin:40px auto;padding:35px 25px;background:#fff;border-radius:2px;box-shadow:0 15px 45px rgba(0,0,0,.18);position:relative;z-index:2}
+.cal-month{font-family:'Cinzel',serif;font-size:20px;color:var(--sky-deep);text-transform:uppercase;letter-spacing:4px;margin-bottom:6px;font-weight:600}
+.cal-year{font-family:'Cormorant Garamond',serif;font-size:16px;color:var(--muted);margin-bottom:24px}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:8px}
+.cal-h{font-size:clamp(10px,3vw,12px);font-weight:500;color:var(--sky);padding-bottom:12px}
+.cal-d{font-family:'Cormorant Garamond',serif;font-size:clamp(16px,4.5vw,20px);color:var(--text);display:flex;justify-content:center;align-items:center;aspect-ratio:1}
+.cal-d.active{background:var(--rose);color:#fff;border-radius:50%;font-weight:600;box-shadow:0 4px 12px rgba(231,168,189,.6)}
+
+/* Cuenta atrás */
+.countdown{display:flex;justify-content:center;gap:14px;flex-wrap:wrap;max-width:420px;margin:10px auto 20px;position:relative;z-index:2}
+.cd-item{display:flex;flex-direction:column;align-items:center;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.3);border-radius:2px;padding:14px 10px;min-width:68px}
+.cd-num{font-family:'Cinzel',serif;font-size:30px;font-weight:600;color:#fff;line-height:1}
+.cd-label{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--sky-light);margin-top:8px}
+
+/* Mapas */
+.addr{font-size:14px;color:var(--muted);margin:10px 0 0}
+.map-box{width:100%;max-width:550px;height:300px;margin:25px auto 0;overflow:hidden;border-radius:2px;box-shadow:0 15px 40px rgba(0,0,0,.1);position:relative;z-index:2}
+.map-box iframe{width:100%;height:100%;border:none}
+.loc-block{width:100%;display:flex;flex-direction:column;align-items:center;position:relative;z-index:2}
+.loc-block+.loc-block{margin-top:80px}
+
+/* Itinerario */
+.timeline{width:100%;max-width:420px;position:relative;z-index:2;margin-top:25px}
+.t-row{display:flex;align-items:baseline;gap:20px;padding:18px 0;border-bottom:1px solid rgba(255,255,255,.2);text-align:left}
+.t-row:last-child{border-bottom:none}
+.t-time{font-family:'Cinzel',serif;font-size:22px;font-weight:500;min-width:92px;color:var(--rose-soft)}
+.t-text{font-family:'Cormorant Garamond',serif;font-size:24px;font-style:italic;color:#fff}
+
+/* Regalos */
+.gift-card{max-width:380px;width:100%;background:#fff;padding:40px 25px;border-radius:2px;box-shadow:0 15px 40px rgba(0,0,0,.07);border-top:3px solid var(--rose);position:relative;z-index:2}
+
+/* RSVP */
+.form-group{width:100%;max-width:400px;margin:0 auto 20px;position:relative;z-index:2}
+.input-line{width:100%;padding:18px 0;background:transparent;border:none;border-bottom:1px solid rgba(0,0,0,.18);color:var(--text);font-family:'Montserrat',sans-serif;font-size:15px;outline:none;text-align:center;transition:border-color .4s}
+.input-line:focus{border-bottom-color:var(--sky-deep)}
+.input-line::placeholder{color:#8795A8}
+textarea.input-line{resize:vertical;min-height:90px}
+select.input-line{appearance:none;text-align-last:center;cursor:pointer}
+.ticket{width:100%;max-width:380px;margin:30px auto;background:#fff;padding:50px 25px;position:relative;text-align:center;border-radius:2px;box-shadow:0 15px 40px rgba(0,0,0,.07);z-index:2;border-top:3px solid var(--rose)}
+.ticket::before,.ticket::after{content:'';position:absolute;top:60%;transform:translateY(-50%);width:24px;height:24px;background:var(--bg);border-radius:50%}
+.ticket::before{left:-12px}.ticket::after{right:-12px}
+
+/* Stack */
+.stack-hint{font-size:11px;text-transform:uppercase;letter-spacing:3px;color:var(--sky-light);margin-bottom:30px;animation:pulse 2.5s infinite}
+.stack{position:relative;width:100%;max-width:320px;height:480px;margin:10px auto 40px;perspective:1000px;cursor:pointer;z-index:2}
+.card{position:absolute;inset:0;border-radius:8px;box-shadow:0 15px 35px rgba(0,0,0,.35);background:#fff;padding:8px;transform-origin:center bottom;-webkit-tap-highlight-color:transparent}
+.card img{width:100%;height:100%;object-fit:cover;border-radius:4px;pointer-events:none}
+
+footer{width:100%;padding:40px 20px 80px;text-align:center;background:var(--dark)}
+footer p{font-size:10px;font-weight:500;letter-spacing:4px;text-transform:uppercase;color:var(--sky-light);opacity:.8}
+
+/* Destellos */
+#sparkles{position:fixed;inset:0;pointer-events:none;z-index:1500;overflow:hidden}
+.fs{position:absolute;bottom:-30px;background:url('data:image/svg+xml;utf8,<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 0C12 5.5 16.5 10 22 10C16.5 10 12 14.5 12 20C12 14.5 7.5 10 2 10C7.5 10 12 5.5 12 0Z" fill="%23E7A8BD"/></svg>') center/contain no-repeat;opacity:0;animation:floatUp ease-in-out infinite}
+@keyframes floatUp{0%{opacity:0;transform:translate(0,0) scale(.4) rotate(0)}10%{opacity:.85}50%{transform:translate(20px,-50vh) scale(1) rotate(180deg)}90%{opacity:.6}100%{opacity:0;transform:translate(-15px,-100vh) scale(.5) rotate(360deg)}}
+
+@media(max-width:400px){
+  .env-title{font-size:62px}.script{font-size:62px}.sec{padding:80px 15px}.info-data{font-size:28px}.name-script{font-size:34px}
+  .map-box{height:260px}.envelope{width:300px;height:195px}
+  .envelope::before,.envelope::after{border-left-width:150px;border-right-width:150px;border-top-width:97px;border-bottom-width:97px}
+  .front-flap{border-left-width:150px;border-right-width:150px;border-top-width:105px}
+  .floral{max-width:110px}.cd-item{min-width:58px;padding:10px 8px}.cd-num{font-size:24px}
+  .t-time{min-width:80px;font-size:19px}.t-text{font-size:21px}
+}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.anim{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+
+<audio id="bg-music" src="assets/song.mp3" loop></audio>
+<div id="sparkles"></div>
+
+<button id="music-btn" class="music-btn" onclick="toggleMusic()" aria-label="Controlar música">
+  <svg id="ic-play" style="display:none" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+  <svg id="ic-pause" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+</button>
+
+<!-- SOBRE -->
+<div id="envelope-screen">
+  <div class="env-text">
+    <div class="env-tag">Mis XV Años</div>
+    <h1 class="env-title">Perla Salvador</h1>
+  </div>
+  <div class="envelope-wrapper" onclick="openEnvelope()">
+    <div class="front-flap"></div><div class="wax-seal"></div><div class="envelope"></div>
+  </div>
+  <div class="hint">Tocar para abrir</div>
+</div>
+
+<main id="main">
+
+  <!-- Portada -->
+  <section class="sec bg-pearl">
+    <img src="assets/flores1.png" class="floral anim zoom d1" style="top:-20px;left:-30px;transform:rotate(15deg)" alt="" onerror="this.remove()">
+    <img src="assets/flores2.png" class="floral anim zoom d2" style="bottom:50px;right:-30px;transform:rotate(-20deg)" alt="" onerror="this.remove()">
+    <svg class="icon anim zoom d1" viewBox="0 0 24 24"><path d="M12 2l2.4 6.9L21 9l-5.5 4.3L17 21l-5-3.9L7 21l1.5-7.7L3 9l6.6-.1z" stroke-linejoin="round"/></svg>
+    <div class="anim up d1 tag-line">Mis XV Años</div>
+    <h1 class="anim zoom d2 script">Perla Salvador Melo</h1>
+    <img src="assets/1.jpg" class="photo anim zoom d3" alt="Perla Salvador Melo">
+    <p class="anim up d4 body-serif">"Con mucha ilusión, los invito a ser parte de un sueño hecho realidad. Será una noche llena de magia, alegría y momentos especiales que deseo compartir con todos ustedes."</p>
+    <img src="assets/2.jpg" class="photo anim zoom d4" alt="Celebrando mis XV">
+  </section>
+
+  <!-- Fecha, calendario y cuenta atrás -->
+  <section class="sec bg-sky">
+    <img src="assets/flores1.png" class="floral anim zoom d2" style="top:20%;right:-20px;transform:rotate(-35deg)" alt="" onerror="this.remove()">
+    <svg class="icon anim zoom d1" viewBox="0 0 24 24"><path d="M7 3v3M17 3v3M4 9h16M5 6h14a1 1 0 011 1v12a1 1 0 01-1 1H5a1 1 0 01-1-1V7a1 1 0 011-1z" stroke-linejoin="round" stroke-linecap="round"/></svg>
+    <div class="anim up d1 info-title">Será un honor contar con tu presencia el</div>
+    <div class="anim up d2 info-data" style="font-size:40px">26 de Diciembre</div>
+    <div class="anim up d3 info-data" style="font-size:24px;color:var(--sky-light);letter-spacing:2px">2026</div>
+
+    <div class="anim zoom d4 calendar">
+      <div class="cal-month">Diciembre</div>
+      <div class="cal-year">2026</div>
+      <div class="cal-grid" id="cal-grid"></div>
+    </div>
+
+    <div class="anim up d4 info-title" style="margin-top:10px">Cuenta Atrás</div>
+    <div class="anim zoom d4 countdown">
+      <div class="cd-item"><div class="cd-num" id="cd-d">00</div><div class="cd-label">Días</div></div>
+      <div class="cd-item"><div class="cd-num" id="cd-h">00</div><div class="cd-label">Hrs</div></div>
+      <div class="cd-item"><div class="cd-num" id="cd-m">00</div><div class="cd-label">Min</div></div>
+      <div class="cd-item"><div class="cd-num" id="cd-s">00</div><div class="cd-label">Seg</div></div>
+    </div>
+    <a class="anim up d4 btn" target="_blank" href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=XV+A%C3%B1os+de+Perla+Salvador+Melo&dates=20261227T010000Z/20261227T060000Z&details=Celebremos+juntos+este+d%C3%ADa+tan+especial&location=Centro+Social+El+Liban%C3%A9s">Agendar Evento</a>
+  </section>
+
+  <!-- Familia -->
+  <section class="sec bg-pearl">
+    <img src="assets/flores2.png" class="floral anim zoom d1" style="bottom:10%;left:-30px;transform:rotate(20deg)" alt="" onerror="this.remove()">
+    <svg class="icon anim zoom d1" viewBox="0 0 24 24"><path d="M12 21s-7.5-4.6-10-9.2C0.3 8.4 2 4.8 5.4 4.2 7.6 3.8 9.8 5 12 7.8 14.2 5 16.4 3.8 18.6 4.2 22 4.8 23.7 8.4 22 11.8 19.5 16.4 12 21 12 21z" stroke-linejoin="round"/></svg>
+    <div class="anim up d1 info-title">Con el amor de mis padres</div>
+    <div class="anim up d2 name-script">Lucely Grisel Melo Martínez</div>
+    <div class="anim up d3 amp">&amp;</div>
+    <div class="anim up d3 name-script">Addi Salvador Núñez</div>
+    <img src="assets/3.jpg" class="photo anim zoom d4" alt="Mis padres">
+
+    <div class="anim up d4 info-title" style="margin-top:40px">Y mis Padrinos</div>
+    <div class="anim up d4 name-script" style="font-size:36px">Alondra Yukari Salvador Melo</div>
+    <div class="anim up d4 amp" style="font-size:16px">&amp;</div>
+    <div class="anim up d4 name-script" style="font-size:36px">Rodrigo Isaac Estevesz Ortega</div>
+    <img src="assets/4.jpg" class="photo anim zoom d4" alt="Mis padrinos">
+  </section>
+
+  <!-- Itinerario -->
+  <section class="sec bg-sky">
+    <img src="assets/flores1.png" class="floral anim zoom d1" style="top:5%;right:-20px;transform:rotate(45deg)" alt="" onerror="this.remove()">
+    <svg class="icon anim zoom d1" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <div class="anim up d1 info-title">Itinerario</div>
+    <div class="anim up d2 timeline">
+      <div class="t-row"><div class="t-time">7:00 pm</div><div class="t-text">Entrada a recepción</div></div>
+      <div class="t-row"><div class="t-time">7:40 pm</div><div class="t-text">Entrada de XV</div></div>
+      <div class="t-row"><div class="t-time">8:40 pm</div><div class="t-text">Brindis</div></div>
+      <div class="t-row"><div class="t-time">9:00 pm</div><div class="t-text">Vals con chambelanes</div></div>
+    </div>
+    <img src="assets/5.jpg" class="photo anim zoom d4" alt="Itinerario">
+  </section>
+
+  <!-- Ubicaciones -->
+  <section class="sec bg-pearl">
+    <img src="assets/flores2.png" class="floral anim zoom d3" style="bottom:30%;right:-25px;transform:rotate(-15deg)" alt="" onerror="this.remove()">
+    <svg class="icon anim zoom d1" viewBox="0 0 24 24"><path d="M12 21s-6.5-5.9-6.5-11A6.5 6.5 0 0112 3.5 6.5 6.5 0 0118.5 10c0 5.1-6.5 11-6.5 11z" stroke-linejoin="round"/><circle cx="12" cy="10" r="2.3"/></svg>
+
+    <div class="loc-block">
+      <div class="anim up d1 info-title">Ceremonia Religiosa</div>
+      <div class="anim up d2 info-data">Iglesia Nuestra Señora de Guadalupe</div>
+      <div class="anim zoom d3 map-box">
+        <iframe src="https://www.google.com/maps?q=Iglesia+Nuestra+Se%C3%B1ora+de+Guadalupe&output=embed" allowfullscreen loading="lazy" referrerpolicy="strict-origin-when-cross-origin" title="Mapa de la iglesia"></iframe>
+      </div>
+      <a class="anim up d4 btn" target="_blank" href="https://www.google.com/maps/search/?api=1&query=Iglesia+Nuestra+Se%C3%B1ora+de+Guadalupe">Ver Ubicación</a>
+    </div>
+
+    <div class="loc-block">
+      <div class="anim up d1 info-title">Recepción · 7:00 pm</div>
+      <div class="anim up d2 info-data">Centro Social El Libanés</div>
+      <div class="anim zoom d3 map-box">
+        <iframe src="https://www.google.com/maps?q=Centro+Social+El+Liban%C3%A9s&output=embed" allowfullscreen loading="lazy" referrerpolicy="strict-origin-when-cross-origin" title="Mapa de la recepción"></iframe>
+      </div>
+      <a class="anim up d4 btn" target="_blank" href="https://www.google.com/maps/search/?api=1&query=Centro+Social+El+Liban%C3%A9s">Ver Ubicación</a>
+    </div>
+  </section>
+
+  <!-- Dress code -->
+  <section class="sec bg-dark">
+    <svg class="icon anim zoom d1" viewBox="0 0 24 24"><path d="M9 3l3 2 3-2 4 3-2 3-2-1v11H8V8L6 9 4 6z" stroke-linejoin="round" stroke-linecap="round"/></svg>
+    <div class="anim up d1 info-title">Dress Code</div>
+    <div class="anim up d2 info-data" style="font-family:'Cinzel',serif;font-size:40px;margin:25px 0;letter-spacing:5px">FORMAL</div>
+    <p class="anim up d4 body-serif" style="font-size:21px">Se solicita amablemente asistir de vestimenta formal.</p>
+    <img src="assets/6.jpg" class="photo anim zoom d4" alt="Código de vestimenta">
+  </section>
+
+  <!-- Mesa de regalos -->
+  <section class="sec bg-pearl">
+    <img src="assets/flores2.png" class="floral anim zoom d1" style="bottom:10%;left:-20px;transform:rotate(15deg)" alt="" onerror="this.remove()">
+    <svg class="icon anim zoom d1" viewBox="0 0 24 24"><path d="M20 12v9a1 1 0 01-1 1H5a1 1 0 01-1-1v-9M12 22V7M12 7H7.5a2.5 2.5 0 010-5C9.6 2 12 7 12 7zM12 7h4.5a2.5 2.5 0 000-5C14.4 2 12 7 12 7z" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <div class="anim up d1 info-title">Mesa de Regalos</div>
+    <p class="anim up d2 body-serif" style="margin:10px auto 35px;font-size:20px">Tu presencia es mi mayor regalo, pero si deseas tener un detalle conmigo:</p>
+    <div class="anim zoom d3 gift-card">
+      <svg class="icon" viewBox="0 0 24 24" style="stroke:var(--rose)"><rect x="3" y="5" width="18" height="14" rx="1.5"/><path d="M3 6l9 7 9-7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <div class="info-data" style="font-size:34px;color:var(--sky-deep)">Lluvia de sobres</div>
+    </div>
+    <img src="assets/7.jpg" class="photo anim zoom d4" alt="Mis detalles">
+  </section>
+
+  <!-- Playlist -->
+  <section class="sec bg-sky">
+    <img src="assets/flores1.png" class="floral anim zoom d1" style="top:6%;left:-30px;transform:rotate(35deg)" alt="" onerror="this.remove()">
+    <svg class="icon anim zoom d1" viewBox="0 0 24 24"><path d="M9 18V5l11-2v13" stroke-linecap="round" stroke-linejoin="round"/><circle cx="6" cy="18" r="3"/><circle cx="17" cy="16" r="3"/></svg>
+    <div class="anim up d1 info-title">Música</div>
+    <div class="anim up d2 info-data" style="font-size:34px">Nuestra Playlist</div>
+    <p class="anim up d3 body-serif" style="margin:20px auto 40px;font-size:20px">Ayúdame a crear el ambiente perfecto agregando tus canciones favoritas para la pista de baile.</p>
+    <div class="anim zoom d4" style="width:100%;max-width:480px;position:relative;z-index:2">
+      <iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/playlist/4c5SgyrYUo8CzLSlW7aqbN?utm_source=generator&si=684a336f272e4750" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+    </div>
+    <a class="anim up d4 btn" target="_blank" href="https://open.spotify.com/playlist/4c5SgyrYUo8CzLSlW7aqbN?si=96e7d255fda54391&pt=8214a0ccb3f4dafaa1ca811ebefb6d6f">Agregar Canciones</a>
+  </section>
+
+  <!-- Stack de fotos -->
+  <section class="sec bg-dark">
+    <svg class="icon anim zoom d1" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+    <div class="anim up d1 info-title" style="color:#fff">Mis Favoritas</div>
+    <div class="anim up d2 stack-hint">Toca la foto para revelar la siguiente</div>
+    <div class="stack anim zoom d3" onclick="nextCard()">
+      <div class="card"><img src="assets/1.jpg" alt="Foto 1"></div>
+      <div class="card"><img src="assets/2.jpg" alt="Foto 2"></div>
+      <div class="card"><img src="assets/3.jpg" alt="Foto 3"></div>
+      <div class="card"><img src="assets/4.jpg" alt="Foto 4"></div>
+      <div class="card"><img src="assets/5.jpg" alt="Foto 5"></div>
+      <div class="card"><img src="assets/6.jpg" alt="Foto 6"></div>
+      <div class="card"><img src="assets/7.jpg" alt="Foto 7"></div>
+      <div class="card"><img src="assets/8.jpg" alt="Foto 8"></div>
+    </div>
+  </section>
+
+  <!-- Galería en vivo -->
+  <section class="sec bg-pearl">
+    <img src="assets/flores1.png" class="floral anim zoom d1" style="top:15%;right:-30px;transform:rotate(35deg)" alt="" onerror="this.remove()">
+    <svg class="icon anim zoom d1" viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="14" rx="1.5"/><path d="M8 6l1.5-2.5h5L16 6" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="13" r="3.5"/></svg>
+    <div class="anim up d1 info-title">Momentos</div>
+    <div class="anim up d2 info-data" style="font-size:34px">Galería en Vivo</div>
+    <p class="anim up d3 body-serif" style="margin:25px auto;font-size:20px">
+      Captura la magia de esta noche. Comparte todas las fotos y videos que tomes directamente en nuestro álbum digital.<br><br>
+      <span style="font-size:14px;font-family:'Montserrat',sans-serif;font-style:normal;font-weight:500;color:var(--sky-deep)">Te sugerimos tener instalada la app de <strong>Google Drive</strong> para subir tus archivos fácilmente.</span>
+    </p>
+    <a class="anim up d4 btn" target="_blank" href="https://drive.google.com/drive/folders/12Kr23NMBV4Ae_cGkvDPgmH0orHjXosgc?usp=sharing">Subir mis Fotos</a>
+    <img src="assets/8.jpg" class="photo anim zoom d4" alt="Momentos">
+  </section>
+
+  <!-- RSVP -->
+  <section class="sec bg-pearl" style="padding-top:50px">
+    <div id="pases" style="display:none;width:100%;margin-bottom:50px">
+      <div class="anim up d1 info-title">Acceso al Evento</div>
+      <div class="anim zoom d2 ticket">
+        <div class="tag-line" style="margin-bottom:20px">Boleto Especial</div>
+        <div style="font-family:'Cormorant Garamond',serif;font-size:28px;color:var(--sky-deep);font-style:italic;margin-bottom:15px;font-weight:500">Invitado Especial</div>
+        <div class="body-serif" style="font-size:19px;margin:0 auto 15px">Pases Asignados</div>
+        <div id="ticket-count" style="font-family:'Cinzel',serif;font-size:60px;font-weight:500;line-height:1">0</div>
+        <div style="font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:2px;color:var(--muted);margin-top:35px">Muestra esta pantalla al llegar</div>
+      </div>
+    </div>
+
+    <svg class="icon anim zoom d1" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="1.5"/><path d="M3 6l9 7 9-7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <div class="anim up d1 info-title">RSVP</div>
+    <div class="anim up d2 info-data" style="font-size:34px">Confirmar Asistencia</div>
+    <p class="anim up d3 body-serif" style="margin:15px auto 40px;font-size:20px">Agradeceremos tu confirmación lo antes posible.</p>
+    <div class="anim up d4 form-group"><input type="text" id="rsvp-name" class="input-line" placeholder="Tu nombre y apellido"></div>
+    <div class="anim up d4 form-group">
+      <select id="rsvp-status" class="input-line">
+        <option value="" disabled selected>¿Nos acompañarás?</option>
+        <option value="yes">Con gusto asistiré</option>
+        <option value="no">No me será posible asistir</option>
+      </select>
+    </div>
+    <div class="anim up d4 form-group">
+      <select id="rsvp-guests" class="input-line" style="display:none"><option value="" disabled selected>¿Cuántas personas asisten?</option></select>
+    </div>
+    <button onclick="sendRSVP()" class="anim up d4 btn" style="margin-bottom:70px">Confirmar por WhatsApp</button>
+
+    <svg class="icon anim zoom d1" viewBox="0 0 24 24"><path d="M12 21s-7.5-4.6-10-9.2C0.3 8.4 2 4.8 5.4 4.2 7.6 3.8 9.8 5 12 7.8 14.2 5 16.4 3.8 18.6 4.2 22 4.8 23.7 8.4 22 11.8 19.5 16.4 12 21 12 21z" stroke-linejoin="round"/></svg>
+    <div class="anim up d1 info-title">Mensajes</div>
+    <div class="anim up d2 info-data" style="font-size:34px">Muro de los Deseos</div>
+    <div class="anim up d3 form-group" style="margin-top:30px"><input type="text" id="wish-name" class="input-line" placeholder="De parte de..."></div>
+    <div class="anim up d4 form-group"><textarea id="wish-message" class="input-line" placeholder="Deja un lindo mensaje para Perla..."></textarea></div>
+    <button onclick="sendWish()" class="anim up d4 btn" style="margin-bottom:60px">Enviar Mensaje</button>
+
+    <div class="anim up d4" style="font-family:'Pinyon Script',cursive;font-size:55px;color:var(--sky-deep);line-height:1">Con amor, Perla</div>
+  </section>
+</main>
+
+<footer><p>Invytia Premium Concierge</p></footer>
+
+<script>
+// --- Audio ---
+let playing=false;
+const music=document.getElementById('bg-music'),icPlay=document.getElementById('ic-play'),icPause=document.getElementById('ic-pause');
+function setIcons(){icPlay.style.display=playing?'none':'block';icPause.style.display=playing?'block':'none'}
+function toggleMusic(){playing?music.pause():music.play();playing=!playing;setIcons()}
+
+// --- Sobre ---
+function openEnvelope(){
+  document.querySelector('.envelope-wrapper').classList.add('open');
+  setTimeout(()=>{
+    document.getElementById('envelope-screen').classList.add('fade-out');
+    document.body.classList.add('content-active');
+    music.play().then(()=>{playing=true;setIcons()}).catch(()=>{playing=false;setIcons()});
+  },1000);
+}
+
+// --- Animaciones on-scroll ---
+document.addEventListener('DOMContentLoaded',()=>{
+  const io=new IntersectionObserver((es,o)=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in-view');o.unobserve(e.target)}}),{threshold:.15});
+  document.querySelectorAll('.anim').forEach(el=>io.observe(el));
+  updateStack();
+});
+
+// --- Calendario (Diciembre 2026) ---
+(function(){
+  const y=2026,m=11,day=26,g=document.getElementById('cal-grid');
+  let h='';['D','L','M','M','J','V','S'].forEach(d=>h+=`<div class="cal-h">${d}</div>`);
+  const first=new Date(y,m,1).getDay(),total=new Date(y,m+1,0).getDate();
+  for(let i=0;i<first;i++)h+='<div></div>';
+  for(let d=1;d<=total;d++)h+=`<div class="cal-d${d===day?' active':''}">${d}</div>`;
+  g.innerHTML=h;
+})();
+
+// --- Stack de fotos ---
+let idx=0;
+function updateStack(){
+  const cards=document.querySelectorAll('.card');
+  const st=[['0','1',10,1],['15px','.95',9,.8],['30px','.9',8,.5]];
+  cards.forEach((c,i)=>{
+    let d=(i-idx)%cards.length;if(d<0)d+=cards.length;
+    c.style.transition='transform .5s ease,opacity .5s ease';
+    const s=st[d]||['40px','.85',1,0];
+    c.style.transform=`translateY(${s[0]}) scale(${s[1]})`;c.style.zIndex=s[2];c.style.opacity=s[3];
+  });
+}
+function nextCard(){
+  const cards=document.querySelectorAll('.card');
+  const c=cards[idx];
+  c.style.transition='transform .4s cubic-bezier(.2,.8,.2,1),opacity .3s';
+  c.style.transform='translateY(-80px) scale(1.05)';c.style.opacity=0;
+  setTimeout(()=>{idx=(idx+1)%cards.length;updateStack()},300);
+}
+
+// --- Destellos flotantes ---
+(function(){
+  const box=document.getElementById('sparkles');
+  for(let i=0;i<20;i++){
+    const s=document.createElement('div');s.className='fs';
+    const size=6+Math.random()*12,dur=9+Math.random()*10;
+    s.style.cssText=`left:${Math.random()*100}vw;width:${size}px;height:${size}px;animation-duration:${dur}s;animation-delay:${Math.random()*dur}s`;
+    box.appendChild(s);
+  }
+})();
+
+// --- Cuenta atrás (26/12/2026, 7:00 pm hora de México) ---
+(function(){
+  const target=new Date("2026-12-26T19:00:00-06:00").getTime();
+  const ids=['cd-d','cd-h','cd-m','cd-s'].map(i=>document.getElementById(i));
+  const pad=n=>String(n).padStart(2,'0');
+  function tick(){
+    const t=Math.max(0,target-Date.now());
+    const v=[Math.floor(t/864e5),Math.floor(t%864e5/36e5),Math.floor(t%36e5/6e4),Math.floor(t%6e4/1e3)];
+    ids.forEach((el,i)=>el.textContent=pad(v[i]));
+  }
+  tick();setInterval(tick,1000);
+})();
+
+// --- Pases (?p=3 o ?pases=3) ---
+const params=new URLSearchParams(location.search);
+let pases=parseInt(params.get('p'))||parseInt(params.get('pases'))||0;
+const tel="527851056017";
+if(pases>0){
+  document.getElementById('pases').style.display='block';
+  document.getElementById('ticket-count').innerText=pases;
+}else{pases=10}
+
+const rsvpStatus=document.getElementById('rsvp-status'),rsvpGuests=document.getElementById('rsvp-guests');
+rsvpStatus.addEventListener('change',e=>{
+  if(e.target.value==='yes'){
+    rsvpGuests.style.display='block';
+    let o='<option value="" disabled selected>¿Cuántas personas asisten?</option>';
+    for(let i=1;i<=pases;i++)o+=`<option value="${i}">${i} persona${i>1?'s':''}</option>`;
+    rsvpGuests.innerHTML=o;
+  }else{rsvpGuests.style.display='none';rsvpGuests.value=''}
+});
+
+function sendRSVP(){
+  const name=document.getElementById('rsvp-name').value.trim(),status=rsvpStatus.value,guests=rsvpGuests.value;
+  if(!name||!status){alert('Por favor, ingresa tu nombre y selecciona una opción.');return}
+  if(status==='yes'&&!guests){alert('Por favor, indica cuántas personas asistirán.');return}
+  const msg=status==='yes'
+    ?`¡Hola! Soy ${name}. Sí, confirmo con gusto mi asistencia a los XV años de Perla Salvador Melo. Seremos ${guests} persona(s) en total.`
+    :`¡Hola! Soy ${name}. Lamentablemente no me será posible asistir a los XV años de Perla Salvador Melo. Agradezco mucho la invitación.`;
+  window.open(`https://wa.me/${tel}?text=${encodeURIComponent(msg)}`,'_blank');
+}
+function sendWish(){
+  const name=document.getElementById('wish-name').value.trim(),wish=document.getElementById('wish-message').value.trim();
+  if(!name||!wish){alert('Por favor, ingresa tu nombre y tu mensaje.');return}
+  window.open(`https://wa.me/${tel}?text=${encodeURIComponent(`Hola Perla, soy ${name}. Te envío este mensaje con mucho cariño:\n\n"${wish}"`)}`,'_blank');
+}
+</script>
+</body>
+</html>
