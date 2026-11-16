@@ -22,7 +22,7 @@ body.content-active .music-btn{opacity:1;visibility:visible}
 .music-btn svg{width:18px;height:18px;fill:#fff}
 
 /* Sobre */
-#envelope-screen{position:fixed;inset:0;background:linear-gradient(160deg,#6FA6D2,#9CC3E3 55%,#E7B9CC) url('assets/fondo.jpg') center/cover no-repeat;z-index:1000;display:flex;flex-direction:column;justify-content:center;align-items:center;transition:opacity 1.2s,visibility 1.2s}
+#envelope-screen{position:fixed;inset:0;background-color:#7FB0D8;background-image:url('assets/fondo.jpg'),linear-gradient(160deg,#6FA6D2,#9CC3E3 55%,#E7B9CC);background-position:center;background-size:cover;background-repeat:no-repeat;z-index:1000;display:flex;flex-direction:column;justify-content:center;align-items:center;transition:opacity 1.2s,visibility 1.2s}
 #envelope-screen.fade-out{opacity:0;visibility:hidden;pointer-events:none}
 .env-text{text-align:center;margin-bottom:50px;animation:float 4s ease-in-out infinite;position:relative;z-index:10}
 .env-tag{font-family:'Cinzel',serif;font-size:14px;letter-spacing:8px;text-transform:uppercase;color:#fff;font-weight:500}
@@ -129,6 +129,8 @@ select.input-line{appearance:none;text-align-last:center;cursor:pointer}
 .card{position:absolute;inset:0;border-radius:8px;box-shadow:0 15px 35px rgba(0,0,0,.35);background:#fff;padding:8px;transform-origin:center bottom;-webkit-tap-highlight-color:transparent}
 .card img{width:100%;height:100%;object-fit:cover;border-radius:4px;pointer-events:none}
 
+footer{display:none}body.content-active footer{display:block}
+#sparkles{display:none}body.content-active #sparkles{display:block}
 footer{width:100%;padding:40px 20px 80px;text-align:center;background:var(--dark)}
 footer p{font-size:10px;font-weight:500;letter-spacing:4px;text-transform:uppercase;color:var(--sky-light);opacity:.8}
 
